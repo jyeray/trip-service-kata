@@ -10,12 +10,9 @@ namespace TripServiceKata.Trip
         {
             if (GetLoggedUser() != null)
             {
-                foreach(User.User friend in user.GetFriends())
+                if (user.GetFriends().Contains(GetLoggedUser()))
                 {
-                    if (friend.Equals(GetLoggedUser()))
-                    {
-                        return FindTripsByUser(user);
-                    }
+                    return FindTripsByUser(user);
                 }
                 return new List<Trip>();
             }
