@@ -18,13 +18,7 @@ namespace TripServiceKata.Tests
         private static readonly Trip.Trip ToGranCanaria = new Trip.Trip();
         private static readonly Trip.Trip ToMadrid = new Trip.Trip();
         private static readonly TesteableTripService TripService = new TesteableTripService();
-
-        [SetUp]
-        public void SetUp()
-        {
-            
-        }
-
+        
         [Test]
         public void throw_NotLoggedInUserException_when_user_is_not_logged()
         {
