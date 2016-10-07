@@ -11,6 +11,7 @@ namespace TripServiceKata.Tests
     public class TripServiceShould
     {
         private static readonly User.User AnUser = new User.User();
+        private static readonly User.User AnotherUser = new User.User();
         private const User.User UnusedUser = null;
         private static User.User loggedInUser;
 
@@ -20,7 +21,7 @@ namespace TripServiceKata.Tests
             var tripService = new TesteableTripService();
             loggedInUser = UnusedUser;
 
-            Action getTripsByUserAction = () => tripService.GetTripsByUser(loggedInUser);
+            Action getTripsByUserAction = () => tripService.GetTripsByUser(AnotherUser);
 
             getTripsByUserAction.ShouldThrow<UserNotLoggedInException>();
         }
@@ -31,9 +32,9 @@ namespace TripServiceKata.Tests
             var tripService = new TesteableTripService();
             loggedInUser = AnUser;
 
-            var trips = tripService.GetTripsByUser(loggedInUser);
+            var anotherUserTrips = tripService.GetTripsByUser(AnotherUser);
 
-            trips.ShouldBeEquivalentTo(new List<Trip.Trip>());
+            anotherUserTrips.ShouldBeEquivalentTo(new List<Trip.Trip>());
         }
 
         public class TesteableTripService : TripService
