@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 using TripServiceKata.Exception;
@@ -9,22 +10,40 @@ namespace TripServiceKata.Tests
     [TestFixture]
     public class TripServiceShould
     {
+        private static readonly User.User AnUser = new User.User();
+        private const User.User UnusedUser = null;
+        private static User.User loggedInUser;
+
         [Test]
         public void throw_NotLoggedInUserException_when_user_is_not_logged()
         {
             var tripService = new TesteableTripService();
+            loggedInUser = UnusedUser;
 
-            Action getTripsByUserAction = () => tripService.GetTripsByUser(null);
+            Action getTripsByUserAction = () => tripService.GetTripsByUser(loggedInUser);
 
             getTripsByUserAction.ShouldThrow<UserNotLoggedInException>();
         }
-    }
 
-    public class TesteableTripService : TripService
-    {
-        protected override User.User GetLoggedUser()
+        [Test]
+        public void returns_an_empty_list_if_users_are_not_friends()
+        {   
+            var tripService = new TesteableTripService();
+            loggedInUser = AnUser;
+
+            var trips = tripService.GetTripsByUser(loggedInUser);
+
+            trips.ShouldBeEquivalentTo(new List<Trip.Trip>());
+        }
+
+        public class TesteableTripService : TripService
         {
-            return null;
+            protected override User.User GetLoggedUser()
+            {
+                return loggedInUser;
+            }
         }
     }
+
+    
 }
