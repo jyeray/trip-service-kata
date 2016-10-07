@@ -12,6 +12,7 @@ namespace TripServiceKata.Tests
     {
         private static readonly User.User AnUser = new User.User();
         private static readonly User.User AnotherUser = new User.User();
+        private static readonly User.User OtherUser = new User.User();
         private const User.User UnusedUser = null;
         private static User.User loggedInUser;
         private static readonly Trip.Trip ToGranCanaria = new Trip.Trip();
@@ -43,6 +44,7 @@ namespace TripServiceKata.Tests
         {
             loggedInUser = AnUser;
             AnotherUser.AddFriend(AnUser);
+            AnotherUser.AddFriend(OtherUser);
             AnotherUser.AddTrip(ToGranCanaria);
             AnotherUser.AddTrip(ToMadrid);
 
