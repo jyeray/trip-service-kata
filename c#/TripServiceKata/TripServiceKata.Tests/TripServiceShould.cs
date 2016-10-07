@@ -1,10 +1,8 @@
 ﻿using System;
 using FluentAssertions;
-using NSubstitute;
 using NUnit.Framework;
 using TripServiceKata.Exception;
 using TripServiceKata.Trip;
-using TripServiceKata.User;
 
 namespace TripServiceKata.Tests
 {
