@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FluentAssertions;
-using NUnit.Framework.Internal;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
 namespace TripServiceKata.Tests
@@ -27,7 +22,7 @@ namespace TripServiceKata.Tests
         [Test]
         public void returns_true_if_other_user_is_friend()
         {
-            var isFriend = user.hasFriend(AFriend);
+            var isFriend = user.HasFriend(AFriend);
 
             isFriend.Should().BeTrue();
         }
@@ -35,7 +30,7 @@ namespace TripServiceKata.Tests
         [Test]
         public void returns_false_if_other_user_is_not_a_friend()
         {
-            var isFriend = user.hasFriend(NotAFriend);
+            var isFriend = user.HasFriend(NotAFriend);
 
             isFriend.Should().BeFalse();
         }

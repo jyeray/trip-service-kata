@@ -9,7 +9,7 @@ namespace TripServiceKata.Trip
         public List<Trip> GetTripsByUser(User.User user)
         {
             CheckUserIsLoggedIn();
-            return user.hasFriend(GetLoggedUser()) ? 
+            return user.HasFriend(GetLoggedUser()) ? 
                 FindTripsByUser(user) : new List<Trip>();
         }
 
