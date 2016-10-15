@@ -21,7 +21,7 @@ namespace TripServiceKata.Tests
         [Test]
         public void throw_NotLoggedInUserException_when_user_is_not_logged()
         {
-            Action getTripsByUserAction = () => TripService.GetTripsByUser(AnotherUser, UnusedUser);
+            Action getTripsByUserAction = () => TripService.GetFriendTrips(AnotherUser, UnusedUser);
 
             getTripsByUserAction.ShouldThrow<UserNotLoggedInException>();
         }
@@ -33,7 +33,7 @@ namespace TripServiceKata.Tests
             OtherUser.AddTrip(ToGranCanaria);
             OtherUser.AddTrip(ToMadrid);
 
-            var anotherUserTrips = TripService.GetTripsByUser(OtherUser, AnUser);
+            var anotherUserTrips = TripService.GetFriendTrips(OtherUser, AnUser);
 
             anotherUserTrips.ShouldBeEquivalentTo(new List<Trip.Trip>());
         }
@@ -46,7 +46,7 @@ namespace TripServiceKata.Tests
             AnotherUser.AddTrip(ToGranCanaria);
             AnotherUser.AddTrip(ToMadrid);
 
-            var anotherUserTrips = TripService.GetTripsByUser(AnotherUser, AnUser);
+            var anotherUserTrips = TripService.GetFriendTrips(AnotherUser, AnUser);
 
             anotherUserTrips.ShouldBeEquivalentTo(new List<Trip.Trip>
             {

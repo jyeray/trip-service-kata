@@ -6,7 +6,7 @@ namespace TripServiceKata.Trip
 {
     public class TripService
     {
-        public List<Trip> GetTripsByUser(User.User friend, User.User loggedInUser)
+        public List<Trip> GetFriendTrips(User.User friend, User.User loggedInUser)
         {
             if (loggedInUser == null) throw new UserNotLoggedInException();
             return friend.HasFriend(loggedInUser) ? 
