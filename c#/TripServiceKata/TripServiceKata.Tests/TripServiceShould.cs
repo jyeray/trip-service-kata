@@ -18,6 +18,12 @@ namespace TripServiceKata.Tests
         private static readonly Trip.Trip ToGranCanaria = new Trip.Trip();
         private static readonly Trip.Trip ToMadrid = new Trip.Trip();
         private static readonly TesteableTripService TripService = new TesteableTripService();
+
+        [SetUp]
+        public void SetUp()
+        {
+            loggedInUser = AnUser;
+        }
         
         [Test]
         public void throw_NotLoggedInUserException_when_user_is_not_logged()
@@ -32,7 +38,6 @@ namespace TripServiceKata.Tests
         [Test]
         public void returns_an_empty_list_if_users_are_not_friends()
         {   
-            loggedInUser = AnUser;
             OtherUser.AddFriend(AnotherUser);
             OtherUser.AddTrip(ToGranCanaria);
             OtherUser.AddTrip(ToMadrid);
@@ -45,7 +50,6 @@ namespace TripServiceKata.Tests
         [Test]
         public void returns_list_of_trips_if_users_are_friends()
         {
-            loggedInUser = AnUser;
             AnotherUser.AddFriend(AnUser);
             AnotherUser.AddFriend(OtherUser);
             AnotherUser.AddTrip(ToGranCanaria);
