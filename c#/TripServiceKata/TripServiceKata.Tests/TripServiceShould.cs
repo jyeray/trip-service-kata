@@ -30,7 +30,7 @@ namespace TripServiceKata.Tests
         {
             loggedInUser = UnusedUser;
 
-            Action getTripsByUserAction = () => TripService.GetTripsByUser(AnotherUser);
+            Action getTripsByUserAction = () => TripService.GetTripsByUser(AnotherUser, loggedInUser);
 
             getTripsByUserAction.ShouldThrow<UserNotLoggedInException>();
         }
@@ -42,7 +42,7 @@ namespace TripServiceKata.Tests
             OtherUser.AddTrip(ToGranCanaria);
             OtherUser.AddTrip(ToMadrid);
 
-            var anotherUserTrips = TripService.GetTripsByUser(OtherUser);
+            var anotherUserTrips = TripService.GetTripsByUser(OtherUser, loggedInUser);
 
             anotherUserTrips.ShouldBeEquivalentTo(new List<Trip.Trip>());
         }
@@ -55,7 +55,7 @@ namespace TripServiceKata.Tests
             AnotherUser.AddTrip(ToGranCanaria);
             AnotherUser.AddTrip(ToMadrid);
 
-            var anotherUserTrips = TripService.GetTripsByUser(AnotherUser);
+            var anotherUserTrips = TripService.GetTripsByUser(AnotherUser, loggedInUser);
 
             anotherUserTrips.ShouldBeEquivalentTo(new List<Trip.Trip>
             {
@@ -66,11 +66,6 @@ namespace TripServiceKata.Tests
 
         public class TesteableTripService : TripService
         {
-            protected override User.User GetLoggedUser()
-            {
-                return loggedInUser;
-            }
-
             protected override List<Trip.Trip> FindTripsByUser(User.User user)
             {
                 return user.Trips();
