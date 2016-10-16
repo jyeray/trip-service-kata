@@ -43,12 +43,15 @@ namespace TripServiceKata.Tests
         [Test]
         public void returns_list_of_trips_if_users_are_friends()
         {
+            var tripDAOStub= Substitute.For<TripDAO>();
+            tripDAOStub.GetUserTrips(AnotherUser).Returns(AnotherUser.Trips());
+            var realTripService = new TripService(tripDAOStub);
             AnotherUser.AddFriend(AnUser);
             AnotherUser.AddFriend(OtherUser);
             AnotherUser.AddTrip(ToGranCanaria);
             AnotherUser.AddTrip(ToMadrid);
 
-            var anotherUserTrips = TripService.GetFriendTrips(AnotherUser, AnUser);
+            var anotherUserTrips = realTripService.GetFriendTrips(AnotherUser, AnUser);
 
             anotherUserTrips.ShouldBeEquivalentTo(new List<Trip.Trip>
             {

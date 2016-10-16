@@ -6,9 +6,11 @@ namespace TripServiceKata.Trip
 {
     public class TripService
     {
+        private readonly TripDAO tripDao;
+
         public TripService(TripDAO tripDAO)
         {
-            
+            tripDao = tripDAO;
         }
 
         public List<Trip> GetFriendTrips(User.User friend, User.User loggedInUser)
@@ -20,7 +22,7 @@ namespace TripServiceKata.Trip
 
         protected virtual List<Trip> FindTripsByUser(User.User user)
         {
-            return TripDAO.FindTripsByUser(user);
+            return tripDao.GetUserTrips(user);
         }
     }
 }
