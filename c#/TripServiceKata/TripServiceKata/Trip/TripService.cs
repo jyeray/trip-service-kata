@@ -20,7 +20,7 @@ namespace TripServiceKata.Trip
                 FindTripsByUser(friend) : new List<Trip>();
         }
 
-        protected virtual List<Trip> FindTripsByUser(User.User user)
+        private List<Trip> FindTripsByUser(User.User user)
         {
             return tripDao.GetUserTrips(user);
         }

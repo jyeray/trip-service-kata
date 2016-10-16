@@ -17,7 +17,6 @@ namespace TripServiceKata.Tests
         private const User.User UnusedUser = null;
         private static readonly Trip.Trip ToGranCanaria = new Trip.Trip();
         private static readonly Trip.Trip ToMadrid = new Trip.Trip();
-        private static readonly TesteableTripService TripService = new TesteableTripService();
         private static readonly TripService RealTripService = new TripService(new TripDAO());
 
         [Test]
@@ -58,18 +57,6 @@ namespace TripServiceKata.Tests
                 ToGranCanaria,
                 ToMadrid
             });
-        }
-
-        public class TesteableTripService : TripService
-        {
-            public TesteableTripService() : base(new TripDAO())
-            {
-            }
-
-            protected override List<Trip.Trip> FindTripsByUser(User.User user)
-            {
-                return user.Trips();
-            }
         }
     }
 }
