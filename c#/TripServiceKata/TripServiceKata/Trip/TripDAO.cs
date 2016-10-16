@@ -11,7 +11,7 @@ namespace TripServiceKata.Trip
                         "TripDAO should not be invoked on an unit test.");
         }
 
-        public virtual List<Trip> GetUserTrips(User.User user)
+        public virtual List<Trip> GetTripsOf(User.User user)
         {
             return FindTripsByUser(user);
         }

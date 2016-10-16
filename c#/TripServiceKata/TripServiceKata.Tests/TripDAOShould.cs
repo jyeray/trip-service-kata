@@ -13,7 +13,7 @@ namespace TripServiceKata.Tests
         public void throw_DependendClassCallDuringUnitTestException_when_getting_users_trips()
         {
             var tripDao = new TripDAO();
-            Action action = () => tripDao.GetUserTrips(new User.User());
+            Action action = () => tripDao.GetTripsOf(new User.User());
 
             action.ShouldThrow<DependendClassCallDuringUnitTestException>();
         }
