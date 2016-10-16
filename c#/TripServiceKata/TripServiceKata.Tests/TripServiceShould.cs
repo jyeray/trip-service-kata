@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
+using NSubstitute;
 using NUnit.Framework;
 using TripServiceKata.Exception;
 using TripServiceKata.Trip;
@@ -21,7 +22,9 @@ namespace TripServiceKata.Tests
         [Test]
         public void throw_NotLoggedInUserException_when_user_is_not_logged()
         {
-            Action getTripsByUserAction = () => TripService.GetFriendTrips(AnotherUser, UnusedUser);
+            var realTripService = new TripService(new TripDAO());
+
+            Action getTripsByUserAction = () => realTripService.GetFriendTrips(AnotherUser, UnusedUser);
 
             getTripsByUserAction.ShouldThrow<UserNotLoggedInException>();
         }
@@ -57,6 +60,10 @@ namespace TripServiceKata.Tests
 
         public class TesteableTripService : TripService
         {
+            public TesteableTripService() : base(new TripDAO())
+            {
+            }
+
             protected override List<Trip.Trip> FindTripsByUser(User.User user)
             {
                 return user.Trips();
