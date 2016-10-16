@@ -17,12 +17,18 @@ namespace TripServiceKata.Tests
         private const User.User UnusedUser = null;
         private static readonly Trip.Trip ToGranCanaria = new Trip.Trip();
         private static readonly Trip.Trip ToMadrid = new Trip.Trip();
-        private static readonly TripService RealTripService = new TripService(new TripDAO());
+        private TripService tripService;
+
+        [SetUp]
+        public void SetUp()
+        {
+            tripService = new TripService(new TripDAO());
+        }
 
         [Test]
         public void throw_NotLoggedInUserException_when_user_is_not_logged()
         {
-            Action getTripsByUserAction = () => RealTripService.GetFriendTrips(AnotherUser, UnusedUser);
+            Action getTripsByUserAction = () => tripService.GetFriendTrips(AnotherUser, UnusedUser);
 
             getTripsByUserAction.ShouldThrow<UserNotLoggedInException>();
         }
@@ -34,7 +40,7 @@ namespace TripServiceKata.Tests
             OtherUser.AddTrip(ToGranCanaria);
             OtherUser.AddTrip(ToMadrid);
 
-            var anotherUserTrips = RealTripService.GetFriendTrips(OtherUser, AnUser);
+            var anotherUserTrips = tripService.GetFriendTrips(OtherUser, AnUser);
 
             anotherUserTrips.ShouldBeEquivalentTo(new List<Trip.Trip>());
         }
@@ -42,15 +48,15 @@ namespace TripServiceKata.Tests
         [Test]
         public void returns_list_of_trips_if_users_are_friends()
         {
-            var tripDAOStub= Substitute.For<TripDAO>();
+            var tripDAOStub = Substitute.For<TripDAO>();
             tripDAOStub.GetUserTrips(AnotherUser).Returns(AnotherUser.Trips());
-            var realTripService = new TripService(tripDAOStub);
+            tripService = new TripService(tripDAOStub);
             AnotherUser.AddFriend(AnUser);
             AnotherUser.AddFriend(OtherUser);
             AnotherUser.AddTrip(ToGranCanaria);
             AnotherUser.AddTrip(ToMadrid);
 
-            var anotherUserTrips = realTripService.GetFriendTrips(AnotherUser, AnUser);
+            var anotherUserTrips = tripService.GetFriendTrips(AnotherUser, AnUser);
 
             anotherUserTrips.ShouldBeEquivalentTo(new List<Trip.Trip>
             {
